@@ -18,7 +18,7 @@ df_maj_sampled = df_maj.sample(len(df_min), random_state=42)
 df_balanced = pd.concat([df_maj_sampled, df_min])
 print(len(df_balanced[df_balanced['status']==0]), len(df_balanced[df_balanced['status']==1]))
 df_balanced.reset_index(inplace=True, drop=True)
-df_balanced
+print(df_balanced)
 
 
 def tok(string) -> str:
