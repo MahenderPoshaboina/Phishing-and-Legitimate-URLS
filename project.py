@@ -79,8 +79,26 @@ print(accuracy)
 confusion = confusion_matrix(y_test, y_pred)
 print(confusion)
 
+def is_legit(url):
+
+    corpus = [to_txt(url)]
+    vectorizer = CountVectorizer(binary=True, vocabulary=VOC)
+    docTermMatrix = vectorizer.fit_transform(corpus)
+
+    matrix = pd.DataFrame(docTermMatrix.A, columns=VOC)
+    matrix['dots'] = [num_dots(url)]
+    matrix['bar'] = [num_bar(url)]
+    matrix['len'] = [len(corpus[0])]
+    matrix['digits'] = [num_digits(corpus[0])]
+
+    prediction = clf.predict(matrix.values)
+
+    return prediction[0] == 0
+
+print(is_legit('https://google.com/'))
 
 plot_tree(clf, max_depth=2, feature_names=matrix.columns, class_names=['phishing', 'clean'], 
           fontsize=7)
 plt.figure(figsize=(30, 30))
 plt.show()
+
